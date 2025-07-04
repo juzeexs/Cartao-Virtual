@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clash Royale - Batalha de Cartas</title>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(to right, #5f0000, #000056, #660000);
+      font-family: system-ui;
+    }
+
+    h1 {
+      background: linear-gradient(to right, #9900ff, #000000, #7700ff);
+      text-align: center;
+      color: rgb(255, 191, 0);
+      font-size: 50px;
+      margin: 0;
+      padding: 20px 0;
+    }
+
+    .jogadores {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+    }
+
+    .jogador {
+      width: 30%;
+      color: white;
+      text-align: center;
+    }
+
+    .jogador img {
+      width: 120px;
+      border-radius:15px;
+
+    }
+
+    .cartas {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .draggable-card {
+      width: 100px;
+      height: 130px;
+      cursor: grab;
+      border-radius: 1%;
+      transition: transform 0.3s;
+      position: relative;
+      
+    }
+
+    .draggable-card:hover {
+      transform: scale(1.1);
+    }
+
+    .habilidades {
+      position: absolute;
+      bottom: -50px;
+      left: 0;
+      width: 100%;
+      font-size: 12px;
+      background: rgb(107, 0, 247);
+      color: rgb(255, 255, 255);
+      border-radius: 5px;
+      padding: 3px;
+      text-align: center;
+    }
+
+    #arena {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      width: 600px;
+      height: 300px;
+      margin: 40px auto;
+      border: 3px dashed white;
+      color: white;
+      background-color: rgba(255,255,255,0.05);
+      border-radius: 15px;
+      padding: 20px;
+    }
+
+    .slot {
+      width: 45%;
+      height: 100%;
+      border: 2px dashed gray;
+      border-radius: 1%px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+    }
+
+    #resultado {
+      color: yellow;
+      text-align: center;
+      font-size: 24px;
+      margin-top: -10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Clash Royale</h1>
+
+  <div class="jogadores">
+    <div class="jogador">
+      <img src="https://appvipo.com/wp-content/uploads/2024/07/Clash-Royale.jpg" alt="Jogador 1">
+      <p>JOGADOR 1</p>
+      <div class="cartas">
+        <div class="draggable-card" draggable="true" data-at="400" data-df="100" data-for="80">
+          <img src="https://1.bp.blogspot.com/-X2axOQN3-As/WAaPWcEDwWI/AAAAAAAAt_I/Nmydk9Wo3RobjkITpSc08sSRSMgpzweDACLcB/s1600/card-coletor-de-elixir-clash-royale.png" width="110px">
+          <div class="habilidades">AT: 400 | DF: 100 | FOR: 80</div>
+        </div>
+        <div class="draggable-card" draggable="true" data-at="150" data-df="60" data-for="40">
+          <img src="https://cdn.royaleapi.com/static/img/cards/valkyrie.png?t=2d912e5fc" width="100%">
+          <div class="habilidades">AT: 150 | DF: 60 | FOR: 40</div>
+        </div>
+        <div class="draggable-card" draggable="true" data-at="100" data-df="60" data-for="30">
+          <img src="https://4.bp.blogspot.com/-IWn4i96dX9A/Vs3MbhaShFI/AAAAAAAAmaU/u4FvN_1zjeI/s1600/mago-clash-royale.png" width="100%">
+          <div class="habilidades">AT: 100 | DF: 60 | FOR: 30</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="jogador">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSowuLSDeNfvyDg0IGsGLFN2ydvBnS9XUU2A&s" alt="Jogador 2">
+      <p>JOGADOR 2</p>
+      <div class="cartas">
+        <div class="draggable-card" draggable="true" data-at="200" data-df="80" data-for="60">
+          <img src="https://theriagames.com/wp-content/uploads/2025/04/PEKKACard-3.webp" width="100%">
+          <div class="habilidades">AT: 200 | DF: 80 | FOR: 60</div>
+        </div>
+        <div class="draggable-card" draggable="true" data-at="120" data-df="60" data-for="35">
+          <img src="https://www.deckshop.pro/img/card_ed/Bandit.png" width="100%">
+          <div class="habilidades">AT: 120 | DF: 60 | FOR: 35</div>
+        </div>
+        <div class="draggable-card" draggable="true" data-at="100" data-df="60" data-for="25">
+          <img src="https://theriagames.com/wp-content/uploads/2025/03/GoblinGangCard-17.webp" width="100%">
+          <div class="habilidades">AT: 100 | DF: 60 | FOR: 25</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="arena">
+    <div class="slot" id="slot1">Jogador 1</div>
+    <div class="slot" id="slot2">Jogador 2</div>
+  </div>
+
+  <p id="resultado"></p>
+
+  <script>
+    let cardData1 = null;
+    let cardData2 = null;
+
+    document.querySelectorAll('.draggable-card').forEach(card => {
+      card.addEventListener('dragstart', e => {
+        e.dataTransfer.setData('card-html', e.currentTarget.outerHTML);
+        e.dataTransfer.setData('ataque', e.currentTarget.dataset.at);
+        e.dataTransfer.setData('defesa', e.currentTarget.dataset.df);
+        e.dataTransfer.setData('forca', e.currentTarget.dataset.for);
+        e.dataTransfer.setData('from-slot', e.currentTarget.closest('.jogador') ? e.currentTarget.closest('.jogador').innerText.includes('1') ? '1' : '2' : '');
+      });
+    });
+
+    document.querySelectorAll('.slot').forEach(slot => {
+      slot.addEventListener('dragover', e => e.preventDefault());
+      slot.addEventListener('drop', e => {
+        e.preventDefault();
+
+        const ataque = parseInt(e.dataTransfer.getData('ataque'));
+        const defesa = parseInt(e.dataTransfer.getData('defesa'));
+        const forca = parseInt(e.dataTransfer.getData('forca'));
+        const cardHTML = e.dataTransfer.getData('card-html');
+        const from = e.dataTransfer.getData('from-slot');
+
+        const poderTotal = ataque + defesa + forca;
+        slot.innerHTML = cardHTML;
+
+        if (slot.id === 'slot1') {
+          cardData1 = poderTotal;
+        } else {
+          cardData2 = poderTotal;
+        }
+
+        if (cardData1 !== null && cardData2 !== null) {
+          const resultado = document.getElementById('resultado');
+          if (cardData1 > cardData2) resultado.textContent = `🏆 Jogador 1 venceu! (${cardData1} vs ${cardData2})`;
+          else if (cardData2 > cardData1) resultado.textContent = `❌ Jogador 2 venceu! (${cardData2} vs ${cardData1})`;
+          else resultado.textContent = `🤝 Empate! (${cardData1} vs ${cardData2})`;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
