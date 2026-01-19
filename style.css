@@ -1,2 +1,226 @@
- 
-   
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #0a0015 0%, #1a0033 50%, #2d0052 100%);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Partículas de fundo */
+body::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+        radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,0.3), transparent),
+        radial-gradient(2px 2px at 60% 70%, rgba(130,10,209,0.4), transparent),
+        radial-gradient(1px 1px at 50% 50%, rgba(255,255,255,0.2), transparent),
+        radial-gradient(1px 1px at 80% 10%, rgba(130,10,209,0.3), transparent);
+    background-size: 200px 200px, 300px 300px, 150px 150px, 250px 250px;
+    background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+    animation: particleFloat 20s linear infinite;
+}
+
+@keyframes particleFloat {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+}
+
+.container {
+    perspective: 1500px;
+    position: relative;
+    z-index: 1;
+}
+
+.card-wrapper {
+    width: 450px;
+    height: 280px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.1s ease-out;
+    cursor: grab;
+}
+
+.card-wrapper:active {
+    cursor: grabbing;
+}
+
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 18px;
+    color: white;
+    overflow: hidden; /* Importante: corta o brilho fora do card */
+    background: linear-gradient(135deg, #820ad1 0%, #5a0891 100%);
+}
+.card-face::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /* Aumentado para um rastro maior */
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        rgba(163, 59, 255, 0) 0%,      /* Roxo transparente */
+        rgba(163, 59, 255, 0.4) 30%,    /* Roxo Neon suave */
+        rgba(255, 255, 255, 0.8) 50%,   /* Centro branco bem forte */
+        rgba(163, 59, 255, 0.4) 70%,    /* Roxo Neon suave */
+        rgba(163, 59, 255, 0) 100%     /* Roxo transparente */
+    );
+    transform: skewX(-30deg);
+    /* 8 segundos torna o ciclo bem lento e luxuoso */
+    animation: shine 8s cubic-bezier(0.4, 0, 0.2, 1) infinite; 
+    pointer-events: none; /* Garante que o brilho não atrapalhe cliques */
+}
+
+
+.card-back {
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+}
+
+.card-front {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    opacity: 0.7;
+    font-weight: 600;
+}
+
+.chip {
+    width: 52px;
+    height: 40px;
+    background: linear-gradient(135deg, #ffd700, #b8860b);
+    border-radius: 6px;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.card-number {
+    font-size: 22px;
+    letter-spacing: 3px;
+    font-family: 'Courier New', monospace;
+    margin-bottom: auto;
+}
+
+.logo-nu {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+    font-weight: bold;
+    font-size: 38px;
+}
+
+.magnetic-stripe {
+    width: 100%;
+    height: 45px;
+    background: rgba(26, 26, 26, 0.9);
+    margin-top: 30px;
+}
+
+.signature-panel {
+    width: 85%;
+    height: 40px;
+    background: rgba(255,255,255,0.9);
+    margin: 20px 32px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 10px;
+}
+
+.signature-text {
+    font-family: 'Brush Script MT', cursive;
+    color: #333;
+    font-size: 18px;
+    margin-right: auto;
+    padding-left: 10px;
+}
+
+.cvv-box {
+    background: white;
+    padding: 5px 10px;
+    border-left: 1px solid #ccc;
+    color: #000;
+    font-weight: bold;
+    text-align: center;
+}
+
+.back-content-grid {
+    padding: 0 32px;
+    margin-top: 5px;
+}
+
+.info-group p {
+    font-size: 10px;
+    line-height: 1.4;
+    margin-bottom: 8px;
+    opacity: 0.85;
+}
+
+.contact-row {
+    display: flex;
+    gap: 25px;
+}
+
+.mastercard-logo {
+    position: absolute;
+    bottom: 25px;
+    right: 32px;
+    display: flex;
+}
+
+.circle {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+.red { background: #eb001b; margin-right: -15px; opacity: 0.95; }
+.orange { background: #ff5f00; opacity: 0.9; }
+
+.instructions {
+    position: absolute;
+    bottom: 30px;
+    color: rgba(255,255,255,0.4);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+@media (max-width: 480px) {
+    .card-wrapper { width: 340px; height: 210px; }
+    .card-number { font-size: 18px; }
+}
+@keyframes shine {
+    0% { 
+        transform: translateX(-250%) skewX(-30deg); 
+    }
+    /* O brilho leva 70% do tempo total para atravessar o card */
+    70% { 
+        transform: translateX(250%) skewX(-30deg); 
+    }
+    /* Os outros 30% do tempo ele fica invisível (pausa) */
+    100% { 
+        transform: translateX(250%) skewX(-30deg); 
+    }
+}
