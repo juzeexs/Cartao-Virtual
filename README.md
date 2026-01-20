@@ -1,4 +1,4 @@
-# 💳 Cartão Virtual Interativo 3D
+# 💳 Cartão Virtual 3D
 
 Um projeto de interface interativa que utiliza **CSS 3D** e **JavaScript** para simular um cartão de crédito com rotação realista, troca de temas e efeitos de iluminação dinâmica.
 
